@@ -1,0 +1,17 @@
+#!/usr/bin/env Rscript
+suppressPackageStartupMessages({ library(AUCell); library(Seurat) })
+source("scripts/utils.R")
+args <- parse_cli(commandArgs(trailingOnly = TRUE))
+cfg <- load_config(args$config %||% "config/analysis_config.R")
+obj <- readRDS(args$input %||% cfg$paths$single_cell_rds)
+gene_file <- args$gene_sets %||% cfg$paths$gene_sets_csv
+require_file(gene_file, "Gene-set table")
+sets <- read.csv(gene_file, check.names = FALSE)
+if (!all(c("set", "gene") %in% names(sets))) stop("Gene-set table requires 'set' and 'gene' columns.")
+gene_sets <- split(sets$gene, sets$set)
+expr <- GetAssayData(obj, assay = DefaultAssay(obj), slot = "data")
+rankings <- AUCell_buildRankings(expr, plotStats = FALSE)
+scores <- t(as.matrix(getAUC(AUCell_calcAUC(gene_sets, rankings))))
+out <- args$output %||% file.path(cfg$paths$output_dir, "application", "aucell_scores.csv")
+ensure_dir(dirname(out))
+write.csv(data.frame(cell = rownames(scores), scores, check.names = FALSE), out, row.names = FALSE)
