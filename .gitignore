@@ -1,0 +1,9 @@
+config/analysis_config.R
+data/
+results/
+logs/
+checkpoints/
+*.RData
+*.Rhistory
+*.Rproj.user/
+.DS_Store

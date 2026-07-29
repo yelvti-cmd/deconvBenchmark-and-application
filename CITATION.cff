@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the associated article and archived software release."
+title: "Deconvolution Benchmark and Application"
+type: software
+license: MIT
+version: 1.0.0
+date-released: 2026-07-29
+repository-code: "https://github.com/yelvti-cmd/deconvBenchmark-and-application"
+authors:
+  - family-names: "Ye"
+    given-names: "Wen"
+  - family-names: "Chen"
+    given-names: "Ao"
+  - family-names: "Du"
+    given-names: "Aixia"
+  - family-names: "Zheng"
+    given-names: "Weijie"
+  - family-names: "Sun"
+    given-names: "Dongxiao"
+  - family-names: "Han"
+    given-names: "Bo"
